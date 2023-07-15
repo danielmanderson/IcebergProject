@@ -1,4 +1,4 @@
-function [potentialVector,thetaVector,centerOfBuoyancy] = PotEnergyCalc(xvalues,yvalues,densityRatio,PEPlot,ShapePlot, thetaInput)
+function [potentialVector,thetaVector,centerOfMass,waterpoint] = PotEnergyCalc(xvalues,yvalues,densityRatio,PEPlot,ShapePlot,thetaInput)
 %
 % Code from Mathematics of Floating 3D Printed Objects
 % by Anderson, Barreto-Rosa, Calvano, Nsair, Sander 2022
@@ -60,7 +60,7 @@ end
 
 a=polyarea(xvalues,yvalues);
 vectorI=[0 0];
-g=9.81;
+%g=9.81;
 
 
 %% Center of Gravity Calculation
@@ -163,12 +163,15 @@ for ell = 1:LL
 
  
 	centerOfBuoyancy=vectorJ/b;
-	massOfObject=densityRatio*a;
+	waterpoint(1) = (centerOfMass(2)+ mw*(centerOfMass(2)-xm))/(1+mw^2);
+	waterpoint(2) = xm + mw*waterpoint(1);
+	
+	%massOfObject=densityRatio*a;
 	nxiw=-sind(theta);
 	nyiw=cosd(theta);
 	normalVectorToWater=[nxiw nyiw];
 	diffBetweenGandB=[centerOfMass(1)-centerOfBuoyancy(1) centerOfMass(2)-centerOfBuoyancy(2)];
-	potentialEnergy=dot(massOfObject*g*normalVectorToWater,diffBetweenGandB);  % massOfObject*g*
+	potentialEnergy=dot(normalVectorToWater,diffBetweenGandB);  
 	potentialVector(ell)= potentialEnergy;
 end
 
@@ -177,7 +180,7 @@ if PEPlot==1
     figure
     plot(thetaVector,potentialVector,'-b')
     xlabel('Angle (Degrees)','FontSize',20)
-    ylabel('Potential Energy','FontSize',23)
+    ylabel('Potential Energy (Dimensionless)','FontSize',23)
     xlim([0,360])
 end 
 

@@ -52,7 +52,7 @@ end
 
 if ShapePlot==1
 	for jj = 1:numlocmin
-		[~,~,waterpoint] = pec(thetamin(jj));
+		[~,~,~,waterpoint] = pec(thetamin(jj));
 		figure; plotshape(xvalues,yvalues,1,waterpoint,thetamin(jj));
 	end
 end 

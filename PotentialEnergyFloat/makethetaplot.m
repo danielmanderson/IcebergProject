@@ -46,4 +46,6 @@ toc
 
 figure; plot(denvec,thetavec,'.')
 ylim([0,360])
-   
+
+xlabel('Density Ratio','FontSize',20)
+ylabel('Stable Float Angles (Degrees)','FontSize',20)

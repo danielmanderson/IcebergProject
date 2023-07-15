@@ -1,24 +1,17 @@
-% Sample usage
+% This shows sample usage. 
+% For all commands below, see the documentation for all possible options 
+% Example: Type "doc plotshape"
 
-% Include the folder with shapes
+addpath('Shapes_Simple','Shapes_Complex') % Include the folder with shapes
 
-addpath('Shapes_Simple','Shapes_Complex')
+arrow;   % Add a shape from the folders 'Shapes_Simple' and 'Shapes_Complex' 
 
-% Add a shape from the folder 'Shapes_Simple/'
+plotshape(xvalues,yvalues,1) % Plot shape to make sure it is counterclockwise orientation 
 
-arrow;   
+PotEnergyCalc(xvalues,yvalues,densityRatio); % Dimensionless potential energy 
 
-% Plot shape to make sure it is counterclockwise orientation 
-plotshape(xvalues,yvalues,1)
+PotEnergyCalc(xvalues,yvalues,0.2); % User specified density ratio (between 0 and 1)
 
-% Find the potential energy 
-PotEnergyCalc(xvalues,yvalues,densityRatio); 
+StableFloatAngles = findPEmin(xvalues,yvalues,densityRatio) % Clockwise rotation angles (degrees)
 
-% Find the actual floating configurations 
-findPEmin(xvalues,yvalues,densityRatio)
-
-% Plot the R/theta graph
-makethetaplot(xvalues,yvalues);
-
-% You can also add shapes from the folder 'Shapes_Complex' 
-
+makethetaplot(xvalues,yvalues); % Plot the R/theta graph
