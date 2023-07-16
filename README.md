@@ -27,20 +27,20 @@ https://arxiv.org/abs/2204.08991
 Members of the Iceberg Project
 
 Mentors: 
-Daniel M. Anderson 
+Daniel M. Anderson, 
 Evelyn Sander
 
 Current Members: 
-Patrick Bishop
-Mark Brant
+Patrick Bishop,
+Mark Brant,
 Max Werkheiser
 
 Past Members: 
-Gabriela Castaneda Guzman
-Brandon G. Barreto-Rosa
-Joshua D. Calvano
-Aiden Dunlop
-Will Howard
-James Nguyen
-Lujain Nsair
+Gabriela Castaneda Guzman,
+Brandon G. Barreto-Rosa,
+Joshua D. Calvano,
+Aiden Dunlop,
+Will Howard,
+James Nguyen,
+Lujain Nsair,
 Gina Thomas
