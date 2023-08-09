@@ -11,8 +11,8 @@ These files are part of an ongoing set of code and printables for 3D printing fl
 In each folder, there is a corresponding README: 
 
 - PotentialEnergyFloat has Matlab files you will need to analyze a shape with a polygonal cross section.
-- figures2points has Matlab code for turning an image into a polygonal region in Matlab and OpenSCAD
-- openscadstl has a code and stl files for printable objects
+- DesignFloat has Matlab code for turning an image into a polygonal region in Matlab and OpenSCAD
+- openscadstl has a code and stl files for printable objects with fixed cross sections including: square cross sections with and without holes for nails; general polygonal cross sections
 - squareloopercode is a special case of PotentialEnergyFloat for the square 
 
 For more information on the theory see the paper 
