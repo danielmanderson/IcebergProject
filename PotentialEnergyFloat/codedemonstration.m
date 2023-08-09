@@ -2,9 +2,9 @@
 % For all commands below, see the documentation for all possible options 
 % Example: Type "doc plotshape"
 
-addpath('Shapes_Simple','Shapes_Complex') % Include the folder with shapes
+addpath('ShapesSimple','ShapesComplex') % Include the folder with shapes
 
-arrow;   % Add a shape from the folders 'Shapes_Simple' and 'Shapes_Complex' 
+arrow;   % Add a shape from the folders 'ShapesSimple' and 'ShapesComplex' 
 
 plotshape(xvalues,yvalues,1) % Plot shape to make sure it is counterclockwise orientation 
 
