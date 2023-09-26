@@ -1,4 +1,4 @@
-function [xvalues,yvalues] = figure2points2(inputfile,outputfile)
+function [xvalues,yvalues] = figure2points(inputfile,outputfile)
 %Sample Usage
 %figure2points('duck.png','duck') %Do not include the suffix on the output file! 
 
@@ -9,7 +9,7 @@ scaler = 0.1;
 bandw = im2gray(I);
 A = uint8(bandw);
 A = A-min(min(A));
-[row,col]=find(A==0);
+[row,col]=find(A==1);
 k = boundary(row,col,1);
 y = row(k);
 y = max(y)-y;
