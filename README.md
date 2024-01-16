@@ -15,7 +15,7 @@ In each folder, there is a corresponding README:
 - openscadstl has a code and stl files for printable objects with fixed cross sections including: square cross sections with and without holes for nails; general polygonal cross sections
 - squareloopercode is a special case of PotentialEnergyFloat for the square 
 
-For more information on the theory see the paper 
+For more information on the theory see the papers 
 
 Daniel M. Anderson, Brandon G. Barreto-Rosa, Joshua D. Calvano, Lujain Nsair, and Evelyn Sander, Mathematics of Floating 3D Printed Objects,
 Proceedings of Symposia in Applied Mathematics (PSAPM) (Edited by Maria Trnkova and Andrew Yarmola),
