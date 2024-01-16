@@ -23,6 +23,11 @@ Published by American Mathematical Society, 2023.
 A downloadable version appears in: 
 https://arxiv.org/abs/2204.08991
 
+and 
+
+D.M. Anderson, P.R. Bishop, M. Brant, G. Castaneda Guzman, E. Sander, and G. Thomas, 
+Stability of Floating Objects at a Two-Fluid Interface, Submitted December 2023. 
+
 
 Members of the Iceberg Project
 
