@@ -31,13 +31,16 @@ Daniel M. Anderson,
 Evelyn Sander
 
 Current Members: 
+Brandon G. Barreto-Rosa,
 Patrick Bishop,
-Mark Brant,
-Max Werkheiser
+Daniel Horvath,
+Mariah Tammera, 
+Sarah Wendt,
+Max Werkheiser,
 
 Past Members: 
+Mark Brant,
 Gabriela Castaneda Guzman,
-Brandon G. Barreto-Rosa,
 Joshua D. Calvano,
 Aiden Dunlop,
 Will Howard,
