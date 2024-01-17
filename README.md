@@ -29,11 +29,11 @@ Stability of Floating Objects at a Two-Fluid Interface, Submitted December 2023.
 
 Members of the Iceberg Project
 
-Mentors: 
+**Mentors:**
 Daniel M. Anderson, 
 Evelyn Sander
 
-Current Members: 
+**Current Members:**
 Brandon G. Barreto-Rosa,
 Patrick Bishop,
 Daniel Horvath,
@@ -41,7 +41,7 @@ Mariah Tammera,
 Sarah Wendt,
 Max Werkheiser
 
-Past Members: 
+**Past Members:**
 Mark Brant,
 Gabriela Castaneda Guzman,
 Joshua D. Calvano,
