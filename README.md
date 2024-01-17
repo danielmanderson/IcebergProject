@@ -52,4 +52,5 @@ Lujain Nsair,
 Gina Thomas
 
 <picture>
-  <source media="figures/FloatingMasonM.JPG"><img alt = "Shows a floating Mason M">
+  <source media="/figures/FloatingMasonM.png"><img alt = "Shows a floating Mason M">
+</picture>
