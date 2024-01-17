@@ -41,7 +41,7 @@ Patrick Bishop,
 Daniel Horvath,
 Mariah Tammera, 
 Sarah Wendt,
-Max Werkheiser,
+Max Werkheiser
 
 Past Members: 
 Mark Brant,
