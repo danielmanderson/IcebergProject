@@ -23,19 +23,17 @@ Published by American Mathematical Society, 2023.
 A downloadable version appears in: 
 https://arxiv.org/abs/2204.08991
 
-and 
-
 D.M. Anderson, P.R. Bishop, M. Brant, G. Castaneda Guzman, E. Sander, and G. Thomas, 
 Stability of Floating Objects at a Two-Fluid Interface, Submitted December 2023. 
 
 
 Members of the Iceberg Project
 
-Mentors: 
+**Mentors:**
 Daniel M. Anderson, 
 Evelyn Sander
 
-Current Members: 
+**Current Members:**
 Brandon G. Barreto-Rosa,
 Patrick Bishop,
 Daniel Horvath,
@@ -43,7 +41,7 @@ Mariah Tammera,
 Sarah Wendt,
 Max Werkheiser
 
-Past Members: 
+**Past Members:**
 Mark Brant,
 Gabriela Castaneda Guzman,
 Joshua D. Calvano,
