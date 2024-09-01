@@ -9,7 +9,7 @@ scaler = 0.1;
 bandw = im2gray(I);
 A = uint8(bandw);
 A = A-min(min(A));
-[row,col]=find(A==1);
+[row,col]=find(A==0);
 k = boundary(row,col,1);
 y = row(k);
 y = max(y)-y;

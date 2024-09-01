@@ -180,7 +180,7 @@ if PEPlot==1
     figure
     plot(thetaVector,potentialVector,'-b')
     xlabel('Angle (Degrees)','FontSize',20)
-    ylabel('Potential Energy (Dimensionless)','FontSize',23)
+    ylabel('$\bar{U}$','Interpreter','Latex','FontSize',23)
     xlim([0,360])
 end 
 
