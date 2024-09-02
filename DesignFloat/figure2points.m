@@ -12,8 +12,6 @@ if ~exist('cutoff', 'var'), cutoff=0; end;
 
 I = imread(inputfile);
 
-scaler = 0.1;
-
 bandw = im2gray(I);
 A = uint8(bandw);
 A = A-min(min(A));
@@ -23,10 +21,19 @@ y = row(k);
 y = max(y)-y;
 x = col(k);
 
-matrix = scaler*[x,y];
+
+%Translate to center
+x = x - (max(x)+min(x))/2;
+y = y - (max(y)+min(y))/2; 
+
+%Scale to 40mm width  
+scaler = 20/max(max(x),max(y));
 
 xvalues = scaler*x;
 yvalues = scaler*y; 
+
+matrix = [xvalues,yvalues];
+
 
 figure; plot(xvalues,yvalues);
 
@@ -35,7 +42,7 @@ save([outputfile,'.mat'],"xvalues","yvalues")
 
 %% Creates txt file for use with Openscad's Polygon function
 
-fileID = fopen([outputfile,'.scad'],'w');
+fileID = fopen(['poly.scad'],'w');
 
 fprintf(fileID,'points = [' );
 for ii = 1:length(x)-1

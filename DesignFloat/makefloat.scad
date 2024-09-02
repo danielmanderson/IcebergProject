@@ -1,8 +1,10 @@
- include <duck.scad>;
- 
+include <poly.scad>;
+
+hei = 70; 
+
  module shape()
 {
-linear_extrude(height=70)
+linear_extrude(height=hei)
     {
        polygon(points);
     }
