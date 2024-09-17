@@ -3,7 +3,7 @@
 Software is written by members of the Iceberg Project at George Mason University, associated with 
 The GMU Math Makerlab and MEGL.  
 
-Current and past members are listed below
+Members are listed below.
 
 These files are part of an ongoing set of code and printables for 3D printing floating objects and understanding stability of floating objects. 
 
@@ -23,7 +23,9 @@ A downloadable version appears in:
 https://arxiv.org/abs/2204.08991
 
 D.M. Anderson, P.R. Bishop, M. Brant, G. Castaneda Guzman, E. Sander, and G. Thomas, 
-Stability of Floating Objects at a Two-Fluid Interface, Submitted December 2023. 
+Stability of Floating Objects at a Two-Fluid Interface, European Journal of Physics , 
+45: 055001, 2024.
+https://iopscience.iop.org/article/10.1088/1361-6404/ad5ca8
 
 
 Members of the Iceberg Project
@@ -32,15 +34,14 @@ Members of the Iceberg Project
 Daniel M. Anderson, 
 Evelyn Sander
 
-**Current Members:**
+
+**Past Members:**
 Brandon G. Barreto-Rosa,
 Patrick Bishop,
 Daniel Horvath,
 Mariah Tammera, 
 Sarah Wendt,
 Max Werkheiser
-
-**Past Members:**
 Mark Brant,
 Gabriela Castaneda Guzman,
 Joshua D. Calvano,
