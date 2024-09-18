@@ -47,7 +47,7 @@ parfor jj = 1:numlocmin
 	thetamin(jj) = fminsearch(pec,thetamin(jj),options);
 end
 
-
+thetamin = round(thetamin); 
 
 
 if ShapePlot==1
