@@ -1,4 +1,4 @@
-function [xvalues,yvalues] = figure2points(inputfile,outputfile,cutoff)
+function [xvalues,yvalues] = figure2points(inputfile,outputfile,cutoff);
 %Sample Usage
 %figure2points('duck.png','duck',0.1) %Do not include the suffix on the output file! 
 
@@ -37,6 +37,7 @@ matrix = [xvalues,yvalues];
 
 figure; plot(xvalues,yvalues);
 
+CrossSectionalArea = polyarea(xvalues,yvalues)
 
 save([outputfile,'.mat'],"xvalues","yvalues")
 

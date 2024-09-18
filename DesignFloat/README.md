@@ -20,6 +20,8 @@ This does three things:
 
 3. It creates a data file formatted for OpenSCAD titled "poly.scad" 
 
+4. It computes the cross sectional area of the object (as long as it is printed without scaling).
+
 The OpenSCAD file makefloat.scad creates a printable file in STL format. 
 
 Instructions: 

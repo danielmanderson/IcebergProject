@@ -45,6 +45,12 @@ if (abs(xvalues(end)-xvalues(1))+abs(yvalues(end)-yvalues(1))>0)
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Find Area
+%
+
+CrossSectionalArea = polyarea(xvalues,yvalues)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Define Rotation Matrix
 %
 angle = theta; 
