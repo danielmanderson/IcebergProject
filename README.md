@@ -4,7 +4,7 @@ Software is written by members of the Iceberg Project at George Mason University
 The GMU Math Makerlab and MEGL. 
 
 Detailed instructions on how to use this software to make your own floating object and predict how it will float are given in 
-[InstructionsFloatingObjects.pdf](https://main/InstructionsFloatingObjects.pdf)
+[InstructionsFloatingObjects.pdf](https://blob/main/InstructionsFloatingObjects.pdf)
 
 Members are listed below.
 
