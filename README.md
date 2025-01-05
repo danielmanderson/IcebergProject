@@ -1,7 +1,10 @@
 # The Iceberg Project:  3D Printing Floating Objects
 
 Software is written by members of the Iceberg Project at George Mason University, associated with 
-The GMU Math Makerlab and MEGL.  
+The GMU Math Makerlab and MEGL. 
+
+Detailed instructions on how to use this software to make your own floating object and predict how it will float are given in 
+[InstructionsFloatingObjects.pdf](https://InstructionsFloatingObjects.pdf)
 
 Members are listed below.
 
