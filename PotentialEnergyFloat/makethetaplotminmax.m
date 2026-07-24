@@ -37,15 +37,19 @@ thetamaxvec = [];
 
 
 tic
+
+parfor ii = 1:NumR
+	[thetamin{ii},thetamax{ii}] = findPEminmax(xvalues,yvalues,densityRatio(ii),0,0,thetaInput); 
+end 
+
+
 for ii = 1:NumR
-	[thetamin,thetamax] = findPEminmax(xvalues,yvalues,densityRatio(ii),0,0,thetaInput); 
-	JJ = length(thetamin);
-	KK = length(thetamax); 
+	JJ = length(thetamin{ii});
+	KK = length(thetamax{ii}); 
 	denminvec = [denminvec; densityRatio(ii)*ones(JJ,1)]; 
 	denmaxvec = [denmaxvec; densityRatio(ii)*ones(KK,1)]; 	
-    thetaminvec =[thetaminvec; thetamin(:)]; 
-    thetamaxvec =[thetamaxvec; thetamax(:)]; 
-    thetaInput = [mod(thetamin+(rand(JJ,1)-0.5),360); mod(thetamax+(rand(KK,1)-0.5),360); linspace(-0.5,360.5,Numtheta)']; 
+    thetaminvec =[thetaminvec; thetamin{ii}]; 
+    thetamaxvec =[thetamaxvec; thetamax{ii}]; 
 end
 
 toc

@@ -31,16 +31,22 @@ thetaInput = linspace(-0.5,360.5,Numtheta+50)';
 denvec = []; 
 thetavec = []; 
 
-
+thetamin = cell(1,NumR);
 
 tic
+parfor ii = 1:NumR
+	thetamin{ii} = findPEmin(xvalues,yvalues,densityRatio(ii),0,0,thetaInput); 
+end 
+
+
 for ii = 1:NumR
-	thetamin = findPEmin(xvalues,yvalues,densityRatio(ii),0,0,thetaInput); 
-	JJ = length(thetamin);
+	JJ = length(thetamin{ii});
 	denvec = [denvec; densityRatio(ii)*ones(JJ,1)]; 
-    thetavec =[thetavec; thetamin(:)]; 
-    thetaInput = [mod(thetamin+(rand(JJ,1)-0.5),360); linspace(-0.5,360.5,Numtheta)']; 
+    thetavec =[thetavec; thetamin{ii}]; 
 end
+
+
+
 
 toc
 
