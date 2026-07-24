@@ -1,5 +1,5 @@
 function [thetamin,thetamax] = findPEminmax(xvalues,yvalues,densityRatio,PEPlot,ShapePlot,thetaInput)
-% Evelyn Sander 2023
+% Evelyn Sander 2026
 % Computes the R versus theta plot of stable floating configurations of a shape with a fixed cross section. 
 %
 % There are example shapes in this folder. Such as, type: 
@@ -60,7 +60,8 @@ end
 if ShapePlot==1
 	for jj = 1:numlocmin
 		[~,~,~,waterpoint] = pec(thetamin(jj));
-		figure; plotshape(xvalues,yvalues,1,waterpoint,thetamin(jj),0,0);
+		waterheight = waterpoint(2); 
+		figure; plotshape(xvalues,yvalues,1,waterheight,thetamin(jj),0,0);
 	end
 end 
 
