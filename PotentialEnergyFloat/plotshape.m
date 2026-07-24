@@ -1,6 +1,6 @@
-function plotshape(xvalues,yvalues,label,waterpoint,theta,type)
+function plotshape(xvalues,yvalues,label,waterheight,theta,type,showarea)
 %
-% Evelyn Sander, Dan Anderson, 2023
+% Evelyn Sander, Dan Anderson, 2026
 %
 % Standard usage: 
 %
@@ -24,14 +24,14 @@ function plotshape(xvalues,yvalues,label,waterpoint,theta,type)
 if ~exist('label', 'var'), label=0; end;
 if ~exist('theta', 'var'), theta=0; end;
 if ~exist('type', 'var'), type=0; end;
-water = 1; if ~exist('waterpoint', 'var'), water=0; waterpoint=[0;0]; end;
-
+water = 1; if ~exist('waterheight', 'var'), water=0; waterheight = 0; end;
+if ~exist('showarea','var'), showarea = 1; end 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Making sure that all the vectors are row/columns as needed
 
 xvalues = xvalues(:)';
 yvalues = yvalues(:)';
-waterpoint = waterpoint(:);
+%waterheight is on the waterline of the rotated shape. Doesn't need to be rotated. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,9 +47,9 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Find Area
 %
-
-CrossSectionalArea = polyarea(xvalues,yvalues)
-
+if showarea==1
+	CrossSectionalArea = polyarea(xvalues,yvalues)
+end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Define Rotation Matrix
 %
@@ -66,7 +66,8 @@ Rotation_Matrix = [ca sa;-sa ca];    % CLOCKWISE ROTATION
 % Rotate the original shape
 %
 
-xyrot = Rotation_Matrix*([xvalues;yvalues]-waterpoint);
+xyrot = Rotation_Matrix*([xvalues;yvalues]);
+
 
 fill(xyrot(1,:),xyrot(2,:),'r','FaceAlpha',.2,'EdgeAlpha',.3);
 
@@ -85,15 +86,22 @@ axis equal
 xmean = mean(xyrot(1,:));
 ymean = mean(xyrot(2,:));
 rmax = sqrt(max((xmean-xyrot(1,:)).^2+(ymean-xyrot(2,:)).^2));
+addon = 0.05*(rmax);
 
 
+xleft = xmean-rmax-addon;
+xright = xmean+rmax+addon;
+waterdown = ymean-rmax-addon;
+ydown = waterdown;
+waterup = waterheight; 
+yup = ymean + rmax + addon;
 
 if water==1
   hold on 
-  fill([xmean-rmax-1,xmean+rmax+1,xmean+rmax+1,xmean-rmax-1],[0,0,ymean-rmax-1,ymean-rmax-1],'b','FaceAlpha',.3,'EdgeAlpha',.3);
+  fill([xleft,xright,xright,xleft],[waterdown,waterdown,waterup,waterup],'b','FaceAlpha',.3,'EdgeAlpha',.3);
 end 
 
-axis([xmean-rmax-1,xmean+rmax+1,ymean-rmax-1,ymean+rmax+1])
+axis([xleft,xright,ydown,yup])
 
 
 

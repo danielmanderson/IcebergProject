@@ -15,3 +15,7 @@ PotEnergyCalc(xvalues,yvalues,0.2); % User specified density ratio (between 0 an
 StableFloatAngles = findPEmin(xvalues,yvalues,densityRatio) % Clockwise rotation angles (degrees)
 
 makethetaplot(xvalues,yvalues); % Plot the R/theta graph
+
+
+
+

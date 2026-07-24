@@ -1,5 +1,5 @@
 function [denvec,thetavec]= makethetaplot(xvalues,yvalues,NumR,Numtheta)
-% Evelyn Sander, based on code by ES, Patrick Bishop, Dan Anderson, 2023
+% Evelyn Sander, based on code by ES, Patrick Bishop, Dan Anderson, 2026
 % Computes the R versus theta plot of stable floating configurations of a shape with a fixed cross section. 
 %
 % Standard usage: 

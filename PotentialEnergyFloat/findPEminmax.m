@@ -1,5 +1,5 @@
-function thetamin = findPEmin(xvalues,yvalues,densityRatio,PEPlot,ShapePlot,thetaInput)
-% Evelyn Sander 2026
+function [thetamin,thetamax] = findPEminmax(xvalues,yvalues,densityRatio,PEPlot,ShapePlot,thetaInput)
+% Evelyn Sander 2023
 % Computes the R versus theta plot of stable floating configurations of a shape with a fixed cross section. 
 %
 % There are example shapes in this folder. Such as, type: 
@@ -27,8 +27,8 @@ options = optimset('TolFun',0.1,'TolX',0.1);
 
 thetaInput = sort(thetaInput); 
 
-pec = @(x) PotEnergyCalc(xvalues,yvalues,densityRatio,0,0,x);
-
+pec      = @(x)      PotEnergyCalc(xvalues,yvalues,densityRatio,0,0,x);
+pecminus = @(x) (-1)*PotEnergyCalc(xvalues,yvalues,densityRatio,0,0,x);
 
 if PEPlot==0
 	[potentialVector,thetavector] = pec(thetaInput);
@@ -40,11 +40,19 @@ end
 potentialVector = [potentialVector; potentialVector(2)];
 thetavector = [thetavector; 360+thetavector(2)];
 localmins = find(islocalmin(potentialVector)==1);
+localmaxs = find(islocalmax(potentialVector)==1);
+
 numlocmin = length(localmins); 
+numlocmax = length(localmaxs); 
 thetamin = thetavector(localmins); 
+thetamax = thetavector(localmaxs); 
 
 parfor jj = 1:numlocmin
 	thetamin(jj) = fminsearch(pec,thetamin(jj),options);
+end
+
+parfor jj = 1:numlocmax
+	thetamax(jj) = fminsearch(pecminus,thetamax(jj),options);
 end
 
 
@@ -52,8 +60,7 @@ end
 if ShapePlot==1
 	for jj = 1:numlocmin
 		[~,~,~,waterpoint] = pec(thetamin(jj));
-		waterheight = waterpoint(2); 
-		figure; plotshape(xvalues,yvalues,1,waterheight,thetamin(jj),0,0);
+		figure; plotshape(xvalues,yvalues,1,waterpoint,thetamin(jj),0,0);
 	end
 end 
 

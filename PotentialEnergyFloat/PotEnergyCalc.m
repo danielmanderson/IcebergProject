@@ -1,7 +1,7 @@
 function [potentialVector,thetaVector,centerOfMass,waterpoint] = PotEnergyCalc(xvalues,yvalues,densityRatio,PEPlot,ShapePlot,thetaInput)
 %
 % Code from Mathematics of Floating 3D Printed Objects
-% by Anderson, Barreto-Rosa, Calvano, Nsair, Sander 2022
+% by Anderson, Barreto-Rosa, Calvano, Nsair, Sander revised 2026
 % Computes the potential energy of a shape with a fixed cross section and density ratio. 
 %
 % Standard usage: 
@@ -28,7 +28,6 @@ function [potentialVector,thetaVector,centerOfMass,waterpoint] = PotEnergyCalc(x
 if ~exist('PEPlot', 'var'), PEPlot=1; end
 if ~exist('ShapePlot', 'var'), ShapePlot=1; end
 if ~exist('thetaInput', 'var'), thetaInput = linspace(0.5,360.5,20+341*PEPlot); end
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Making sure that all the vectors are row/columns as needed
 
@@ -58,34 +57,20 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Set area of cross-section, gravity constant
 
-a=polyarea(xvalues,yvalues);
-vectorI=[0 0];
-%g=9.81;
-
+Area=polyarea(xvalues,yvalues);
+vectorI=[0,0];
 
 %% Center of Gravity Calculation
 %
-for k=1:N-1
-    if k==N-1
-        nxi=(yvalues(1)-yvalues(k));
-        nyi=-(xvalues(1)-xvalues(k));
-        xaverage=((xvalues(1)^2)+xvalues(1)*xvalues(k)+(xvalues(k)^2))/3;
-        yaverage=((yvalues(1)^2)+yvalues(1)*yvalues(k)+(yvalues(k)^2))/3;
-    else 
-        nxi=(yvalues(k+1)-yvalues(k));
-        nyi=-(xvalues(k+1)-xvalues(k));
-        xaverage=((xvalues(k+1)^2)+xvalues(k+1)*xvalues(k)+(xvalues(k)^2))/3;
-        yaverage=((yvalues(k+1)^2)+yvalues(k+1)*yvalues(k)+(yvalues(k)^2))/3;
-    end
-    newVector=[0.5*(xaverage)*nxi 0.5*(yaverage)*nyi];
-    vectorI=vectorI+newVector;
-end
+for k=1:N-1 
+    nxi= (yvalues(k+1)-yvalues(k));
+    nyi=-(xvalues(k+1)-xvalues(k));
+    xaverage=((xvalues(k+1)^2)+xvalues(k+1)*xvalues(k)+(xvalues(k)^2));
+    yaverage=((yvalues(k+1)^2)+yvalues(k+1)*yvalues(k)+(yvalues(k)^2));
 
-%% Center of Mass (can change for off-center), where dvec = distance from center of mass
-%
-centerOfMass=(vectorI)/a+[0.0 0.0];
-dvec=sqrt((xvalues-centerOfMass(1)).^2+(yvalues-centerOfMass(2)).^2);
-maxd=max(dvec);
+    vectorI=vectorI+[(xaverage)*nxi,(yaverage)*nyi];
+end
+centerOfMass = vectorI/(6*Area); 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -96,40 +81,51 @@ potentialVector = zeros(LL,1);
 
 for ell = 1:LL
     theta=thetaVector(ell);
-	mw=tand(theta);
 
-	xstar1=centerOfMass(1)-maxd*cosd(theta-90);
-	ystar1=centerOfMass(2)-maxd*sind(theta-90);
-	xstar2=centerOfMass(1)+maxd*cosd(theta-90);
-	ystar2=centerOfMass(2)+maxd*sind(theta-90);
+%All the following is for the grounded case
+    sa = sind(theta); %Because I am using degrees
+    ca = cosd(theta);
+    RotationMatrix = [ca sa; -sa ca]; %CLOCKWISE ROTATION
 
-	indexOfYBoi=find(yvalues==max(yvalues));
-	xboi=xvalues(indexOfYBoi(1));
+	XYRotated = RotationMatrix*[xvalues;yvalues];
+    xvaluesR = XYRotated(1,:); 
+    yvaluesR = XYRotated(2,:);	
 
-	xa=ystar2-mw*xstar2;
-	xb=ystar1-mw*xstar1;
+	
+	centerOfMassRotated = RotationMatrix*centerOfMass(:);
 
-	[fa,~,~]=subboi(xa,xvalues,yvalues,theta,a,densityRatio);
-	[fb,~,~]=subboi(xb,xvalues,yvalues,theta,a,densityRatio);
+	ylow =   min(yvaluesR);
+	yhigh =  max(yvaluesR);
+	
+	ydistlow  = centerOfMassRotated(2) - ylow;
+	ydisthigh = yhigh - centerOfMassRotated(2); 
 
-%% Bisection Method to find where water line intersects object
-    while fa*fb > 0
-   display('Bracket Not Found.  Try new guesses.')
-    end
-    if fa == 0
-       %display('xa is a solution')
-    end
-    if fb == 0
-       %display('xb is a solution')
-       return
-    end
+	waterdepth = yhigh-2*ylow+centerOfMassRotated(2); %This is set such that the object floats without touching. 
+
+	xa = -ydistlow + waterdepth;
+	xb = -ydistlow;
+
+	[fa,~,~]=subboi(xa,xvalues,yvalues,theta,Area,densityRatio,centerOfMass);
+	[fb,~,~]=subboi(xb,xvalues,yvalues,theta,Area,densityRatio,centerOfMass);
+
+
+if fa < 0 && fb <0
+    %display('Grounded iceberg in this orientation')    
+    xm = xa; 
+    fm = fa;
+elseif fa==0
+	xm = xa;
+    fm = fa
+elseif fb==0
+	xm = xb;
+    fm = fb
+	
+else
     tol=10^(-6);
     err=abs((xb-xa)/2);
     while err>tol
-        xm=xa+(xb-xa)/2;  % define new midpoint guess (first time through this 
-                            % is the same as x(1).  After that, it is recorded
-                            % as x(k)
-        [fm,xsub,ysub]=subboi(xm,xvalues,yvalues,theta,a,densityRatio);
+    	xm=xa+(xb-xa)/2;  % define new midpoint guess
+        [fm,xsub,ysub]=subboi(xm,xvalues,yvalues,theta,Area,densityRatio,centerOfMass);
           if sign(fm)==sign(fa)  
              xa=xm;             % xstar guaranteed between xm and xb so replace xa with xm
              fa=fm;             % replace fa with fm
@@ -139,39 +135,50 @@ for ell = 1:LL
           end
           err=abs((xb-xa)/2);
     end
+end
+
+[fm,xsub,ysub]=subboi(xm,xvalues,yvalues,theta,Area,densityRatio,centerOfMass);
+
 
 %%     
-  b=polyarea(xsub,ysub);
   M=length(xsub);
-  vectorJ=[0 0];
+  if M>1
+  	Asub=polyarea(xsub,ysub); %Submerged area
+  else 
+  	Asub = 1;
+  end
+  vectorJ=[0, 0];
 
-    for k=1:M-1
-        if k==M-1
-            nxi=(ysub(1)-ysub(k));
-            nyi=-(xsub(1)-xsub(k));
-            xsubav=((xsub(1)^2)+xsub(1)*xsub(k)+(xsub(k)^2))/3;
-            ysubav=((ysub(1)^2)+ysub(1)*ysub(k)+(ysub(k)^2))/3;
-        else
-            nxi=(ysub(k+1)-ysub(k));
-            nyi=-(xsub(k+1)-xsub(k));
-            xsubav=((xsub(k+1)^2)+xsub(k+1)*xsub(k)+(xsub(k)^2))/3;
-            ysubav=((ysub(k+1)^2)+ysub(k+1)*ysub(k)+(ysub(k)^2))/3;
-        end
-        newVector=[0.5*(xsubav)*nxi 0.5*(ysubav)*nyi];
-        vectorJ=vectorJ+newVector;
-    end
+  for k=1:M-1
+      nxi=(ysub(k+1)-ysub(k));
+      nyi=-(xsub(k+1)-xsub(k));
+      xsubav=((xsub(k+1)^2)+xsub(k+1)*xsub(k)+(xsub(k)^2));
+      ysubav=((ysub(k+1)^2)+ysub(k+1)*ysub(k)+(ysub(k)^2));
+      newVector=[(xsubav)*nxi, (ysubav)*nyi];
+      vectorJ=vectorJ+newVector;
+  end
 
  
-	centerOfBuoyancy=vectorJ/b;
-	waterpoint(1) = (centerOfMass(2)+ mw*(centerOfMass(2)-xm))/(1+mw^2);
-	waterpoint(2) = xm + mw*waterpoint(1);
+  centerOfBuoyancy=vectorJ/(6*Asub);
 	
-	%massOfObject=densityRatio*a;
-	nxiw=-sind(theta);
-	nyiw=cosd(theta);
-	normalVectorToWater=[nxiw nyiw];
-	diffBetweenGandB=[centerOfMass(1)-centerOfBuoyancy(1) centerOfMass(2)-centerOfBuoyancy(2)];
-	potentialEnergy=dot(normalVectorToWater,diffBetweenGandB);  
+	px = centerOfMass(1) - xm*sind(theta);
+	py = centerOfMass(2) + xm*cosd(theta); 
+	
+	waterpoint = RotationMatrix*[px;py]; 
+
+
+	normalVectorToWater=[-sind(theta);cosd(theta)];
+    diffBetweenGandB= centerOfMass-centerOfBuoyancy;
+    
+	potentialEnergy=dot(normalVectorToWater(:),diffBetweenGandB(:));  %non-grounded
+
+
+	%Grounded version needs an additional term
+	%additionalterm = (1-(1/densityRatio)*Asub/Area)*(dot(centerOfBuoyancy(:),normalVectorToWater(:)) - (centerOfMassRotated(2)-ydistlow));
+    
+    additionalterm = 0; 
+    	
+	potentialEnergy = potentialEnergy + additionalterm;
 	potentialVector(ell)= potentialEnergy;
 end
 
@@ -191,17 +198,21 @@ end
 %Below are the functions needed. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [z,xsub,ysub]=subboi(bw,xvalues,yvalues,theta,a,densityRatio)
+function [z,xsub,ysub]=subboi(bw,xvalues,yvalues,theta,Area,densityRatio,G)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-line_angle=theta*pi/180;
-line_point=[0;bw];
+line_angle=theta*pi/180; %In radians!
+%LPx= G(1)-bw*sin(line_angle);
+%LPy= G(2)+bw*cos(line_angle); 
+%line_point = [LPx;LPy]; 
+
+line_point = G(:)+bw*[-sin(line_angle);cos(line_angle)]; 
+
 XYsub = get_submerged_points(xvalues,yvalues,line_angle,line_point);
 xsub=XYsub(1,:);
 ysub=XYsub(2,:);
-b=polyarea(xsub,ysub);
-c=b/a;
-z=c-densityRatio;
+Asub=polyarea(xsub,ysub);
+z=Asub/Area-densityRatio;
 end 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -255,8 +266,8 @@ ypoints = XY_Rotated(2,:);
 %
 % Identify new 'y' value of the rotated line
 %
-XY_Line = Rotation_Matrix*line_point;
-Y_Line = XY_Line(2);                  % Specified 'waterline' height 
+XYLine = Rotation_Matrix*line_point(:); 
+Y_Line = XYLine(2);                  % Specified 'waterline' height 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Find index values of points below the line (i.e. ypoints <= Y_Line)
