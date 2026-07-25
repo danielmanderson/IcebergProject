@@ -16,7 +16,6 @@ StableFloatAngles = findPEmin(xvalues,yvalues,densityRatio) % Clockwise rotation
 
 makethetaplot(xvalues,yvalues); % Plot the R/theta graph
 
-%new command in 2026 
 makethetaplotminmax(xvalues,yvalues); % Plot the R/theta graph for both stable and most unstable orientations
 
 
