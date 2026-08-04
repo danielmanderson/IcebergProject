@@ -47,7 +47,7 @@ parfor jj = 1:numlocmin
 	thetamin(jj) = fminsearch(pec,thetamin(jj),options);
 end
 
-
+thetamin = mod(thetamin,360);
 
 if ShapePlot==1
 	for jj = 1:numlocmin

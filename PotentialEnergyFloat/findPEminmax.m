@@ -42,10 +42,15 @@ thetavector = [thetavector; 360+thetavector(2)];
 localmins = find(islocalmin(potentialVector)==1);
 localmaxs = find(islocalmax(potentialVector)==1);
 
+
 numlocmin = length(localmins); 
 numlocmax = length(localmaxs); 
 thetamin = thetavector(localmins); 
 thetamax = thetavector(localmaxs); 
+
+thetamin = mod(thetamin,360);
+thetamax = mod(thetamax,360);
+
 
 parfor jj = 1:numlocmin
 	thetamin(jj) = fminsearch(pec,thetamin(jj),options);
